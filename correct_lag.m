@@ -1,14 +1,12 @@
 function [y_time] = correct_lag(x_cyclic, y_time)
-    % Account for the fact that the signal received at y1 and y2 is lagging
-    % behind those in x1 and x2 because of a time delay. The correction is
+    % Account for the fact that the received signal is lagging
+    % behind the original signal. The correction is
     % done using the cross correlation.
     % Input Parameters:
-    % x1            : The signal sent from Tx1
-    % x2            : The signal sent from Tx2
+    % x_cyclic : The transmitted signal with cyclic prefix.
+    % y_time   : The signal received across the channel.
     % Returns:
-    % y1            : The signal received by Rx1
-    % y2            : The signal received by Rx2
-    % TODO fix documentation
+    % y_time   : The received signal with the time delay removed.
     
     % Determine how much y1 is lagging
     [c1, lags1] = xcorr(y_time, x_cyclic);

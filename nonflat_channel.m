@@ -1,6 +1,11 @@
 function [ y ] = nonflat_channel( x )
     % This is the function provided in class to simulate the channel for
     % the ofdm implementation.
+    % Input:
+    % x : Some transmit vector to send through the channel.
+    % Returns:
+    % y : Received signal vector with channel impulse response and noise.
+    % Configure variable SNR_dB to change channel SNR.
     SNR_dB = 30;  %nominal SNR in dB
 
     SNR = 10^(SNR_dB/10); % nominal SNR 
