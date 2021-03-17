@@ -1,13 +1,13 @@
-function x_cyclic = encode_data(x_data)
+function x_cyclic = encode_data(x_data, block_size, prefix_size)
 % TODO
 % Assume 64 bit
-    x_time = ifft(x_data);
     % Add 16 for each 64 TODO comment
-    x_cyclic = zeros(1, length(x_data) + length(x_data)/4);
+    prefix_ratio = block_size/prefix_size; % Assumed whole number ratio
+    x_cyclic = zeros(1, length(x_data) + length(x_data)/prefix_ratio);
     pointer = 1;
-    for i = 1:64:length(x_data)-64
-        next_block = add_cyclic_prefix(x_time(i:i+64));
-        x_cyclic(pointer:pointer+80) = next_block;
-        pointer = pointer + 80;
+    for i = 1:block_size:length(x_data) - (block_size - 1)
+        next_block = add_cyclic_prefix(x_data(i:i+block_size-1), prefix_size);
+        x_cyclic(pointer : pointer+block_size+prefix_size-1) = next_block;
+        pointer = pointer + block_size+prefix_size;
     end
 end

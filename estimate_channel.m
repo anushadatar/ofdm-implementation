@@ -1,13 +1,13 @@
-function H_K = estimate_channel(x_train)
+function H_K = estimate_channel(x_train, block_size, prefix_size)
     % Estimate the impulse response of the channel using the training
     % signal known by both the transmitter and the receiver.
     
-    % Nubmer of training signals to average
+    % Number of training signals to average
     N = 100;
 
     % Create time domain signal and add cyclic prefix.
     x_time = ifft(x_train);
-    x_cyclic = add_cyclic_prefix(x_time);
+    x_cyclic = add_cyclic_prefix(x_time, prefix_size);
 
     % Averaged impulse response of the channel   
     H_K = zeros(1, 64);
@@ -21,6 +21,7 @@ function H_K = estimate_channel(x_train)
         y_time = correct_lag(x_cyclic, y_time);
 
         % Get rid of cyclic prefix
+        % todo BLOCK SIZE PREFIX SIZE
         y_time = y_time(17:17+63);
 
         % Put back in frequency domain and add to channel estimate.
