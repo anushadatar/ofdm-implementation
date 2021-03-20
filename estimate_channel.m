@@ -32,5 +32,4 @@ function H_K = estimate_channel(x_train, block_size, prefix_size)
 
     % Find average channel estimate
     H_K = H_K./N;
-    
 end
