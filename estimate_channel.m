@@ -4,32 +4,28 @@ function H_K = estimate_channel(x_train, block_size, prefix_size)
     
     % Number of training signals to average
     N = 100;
-
+    
+    x_train = repmat(x_train, 1, N);
     % Create time domain signal and add cyclic prefix.
-    x_time = ifft(x_train);
-    x_cyclic = add_cyclic_prefix(x_time, prefix_size);
-
+    x_cyclic = encode_data(x_train, block_size, prefix_size);
+    
     % Averaged impulse response of the channel   
-    H_K = zeros(1, 64);
+    H_K = zeros(1, 64*N);
 
-    for i = 1:N
+    % Transmit signal across channel
+    y_time = nonflat_channel(x_cyclic);
 
-        % Transmit signal across channel
-        y_time = nonflat_channel(x_cyclic);
+    % Account for received signal lag
+    y_time_corr_lag = correct_lag(x_cyclic, y_time);
 
-        % Account for received signal lag
-        y_time = correct_lag(x_cyclic, y_time);
+    % Get rid of cyclic prefix
+    % todo BLOCK SIZE PREFIX SIZE
+    y_time_no_cyclic = decode_data(y_time_corr_lag, N, block_size, prefix_size);
 
-        % Get rid of cyclic prefix
-        % todo BLOCK SIZE PREFIX SIZE
-        y_time = y_time(17:17+63);
-
-        % Put back in frequency domain and add to channel estimate.
-        y = fft(y_time);
-        h_k = y./x_train;
-        H_K = H_K + h_k;
-    end
-
+    % Put back in frequency domain and add to channel estimate.git status
+    H_K_long = y_time_no_cyclic./x_train;
+    H_K_r = reshape(H_K_long,[64,N]);
     % Find average channel estimate
-    H_K = H_K./N;
+    H_K = mean(H_K_r,2);
+    H_K = H_K.';
 end

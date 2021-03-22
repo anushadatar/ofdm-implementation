@@ -12,7 +12,6 @@ function [y_time] = correct_lag(x_cyclic, y_time)
     [c1, lags1] = xcorr(y_time, x_cyclic);
     [~, I1] = max(abs(c1));
     t_corr1 = lags1(I1);
-    
     % Correct lag in y1 and add zeros to the end to account for shortened
     % length
     y_time = y_time(t_corr1+1:end);

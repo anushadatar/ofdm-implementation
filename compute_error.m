@@ -8,6 +8,7 @@ function [err] = compute_error(rx_data, tx_data)
     %
     % Returns:
     % err     : Percent error between transmitted and received message.
+    
     rx_data = sign(real(rx_data));
-    err = sum((rx_data ~= tx_data)) / length(tx_data);
+    err = sum(rx_data ~= tx_data) / length(tx_data);
 end

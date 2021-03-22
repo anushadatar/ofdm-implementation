@@ -19,7 +19,6 @@ function [ y ] = nonflat_channel( x )
     tmp = resample(tmp, 10,9);
     h = zeros(64,1);
     h(8:8+length(tmp)-1) = tmp;
-
     % convolve input signal with channel impulse response
     y = conv(x,h);
 

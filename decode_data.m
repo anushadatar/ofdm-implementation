@@ -5,7 +5,7 @@ function y_decoded = decode_data(y_time, number_of_blocks, block_size, prefix_si
     y_decoded = [];
     %pointer = 1;
     for i = 1:80:number_of_blocks*80 - 79
-        next_block = y_time(i+16:i+16+63);
+        next_block = fft(y_time(i+16:i+16+63));
         y_decoded = [y_decoded next_block];
         %pointer = pointer + 64;
     end
