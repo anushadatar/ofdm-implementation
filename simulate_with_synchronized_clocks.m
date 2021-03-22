@@ -8,7 +8,7 @@ function [output_data, error_rate] = simulate_with_synchronized_clocks(x_train, 
     % output_data : The simulated decoded data.
     % error_rate  : The percent error between the simulated decoded data
     % and the original transmit data.
-    number_of_blocks = 100;
+    number_of_blocks = 50; % Manually change to reflet x_data.
     block_size = 64;
     prefix_size = 16;
     
