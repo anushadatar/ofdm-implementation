@@ -11,6 +11,7 @@ function [output_data, error_rate] = simulate_with_synchronized_clocks(x_train, 
     
     % System parameters
     number_of_blocks = 100;
+    
     block_size = 64;
     prefix_size = 16;
     

@@ -1,15 +1,23 @@
 function H_K = estimate_channel(x_train, block_size, prefix_size)
     % Estimate the impulse response of the channel using the training
     % signal known by both the transmitter and the receiver.
-    
+    % Input Parameters:
+    % x_train     : The known training signal.
+    % block_size  : The number of bits per block (64 for wifi).
+    % prefix_size : The number of bits in the prefix (16 for wifi)
+    % Returns:
+    % H_k         : Vector (length block_size) representing the channel.
+
     % Number of training signals to average
     N = 100;
     
+    % Extend training signal
     x_train = repmat(x_train, 1, N);
+   
     % Create time domain signal and add cyclic prefix.
     x_cyclic = encode_data(x_train, block_size, prefix_size);
     
-    % Averaged impulse response of the channel   
+    % Store all channel estimates in long vector   
     H_K = zeros(1, 64*N);
 
     % Transmit signal across channel
