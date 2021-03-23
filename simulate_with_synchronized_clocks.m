@@ -1,7 +1,5 @@
 function [output_data, error_rate] = simulate_with_synchronized_clocks(x_train, x_data)
-    % Simulate sending and receiving data with an SVD-based technique (i.e.
-    % the scenario when both the transmitter and the receiver know the
-    % channel parameters.
+    % Simulate sending and receiving data using OFDM.
     % x_train : The training signal to transmit across the channel.
     % x_data  : The data to transmit across the channel.
     % Returns:
@@ -11,7 +9,6 @@ function [output_data, error_rate] = simulate_with_synchronized_clocks(x_train, 
     
     % System parameters
     number_of_blocks = 100;
-    
     block_size = 64;
     prefix_size = 16;
     
