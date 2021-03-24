@@ -6,9 +6,7 @@ function x_cyclic = encode_data(x_data, block_size, prefix_size)
     % prefix_size : The number of bits in the prefix (16 for wifi)
     % Returns:
     % x_cyclic    : The data vector encoded with the cyclic prefix.
-    
     x_cyclic = [];
-    
     for i = 1:block_size:length(x_data) - (block_size - 1)
         data_ifft = ifft(x_data(i:i+block_size-1));
         next_block = add_cyclic_prefix(data_ifft, prefix_size);

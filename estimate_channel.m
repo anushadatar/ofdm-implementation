@@ -19,6 +19,7 @@ function H_K = estimate_channel(x_train, y_time, block_size, prefix_size, num_tr
     % Put back in frequency domain and add to channel estimate.git status
     H_K_long = y_time_no_cyclic./x_train;
     H_K_r = reshape(H_K_long,[64,num_train]).';
+
     % Find average channel estimate
     H_K = mean(H_K_r,1);
 end
