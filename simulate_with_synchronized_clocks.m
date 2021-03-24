@@ -11,28 +11,20 @@ function [output_data, error_rate] = simulate_with_synchronized_clocks(x_train, 
     
     % System parameters
     number_of_blocks = 100;
-    
     block_size = 64;
     prefix_size = 16;
+    num_train = 30;
     
-    %Estimate the channel
-    H_k = estimate_channel(x_train, block_size, prefix_size);
+    % Send multiple training sequences
+    x_train = repmat(x_train, 1, num_train);
     
-    % IFFT and add cyclic prefixes to each 64-sample block
-    x_cyclic = encode_data(x_data, block_size, prefix_size);
+    % Package transmit data
+    tx_cyclic = package_data(x_train, x_data, block_size, prefix_size);
     
     % transmit the signal
-    y_time = nonflat_channel(x_cyclic);
+    y_time = nonflat_channel(tx_cyclic);
     
-    % Account for received signal lag
-    y_time_lag_corr = correct_lag(x_cyclic, y_time);
-    
-    % Get rid of cyclic prefix and put back in frequency domain.
-    y_fft = decode_data(y_time_lag_corr, number_of_blocks, block_size, prefix_size);
-
-    % Divide out the channel H_k
-    channel_matrix = repmat(H_k, 1, number_of_blocks);
-    output_data = y_fft./channel_matrix;
+    output_data =  process_received_data(x_train, tx_cyclic, y_time, block_size, prefix_size, number_of_blocks, num_train);
 
     % Compute overall error
     error_rate = compute_error(output_data, x_data);
