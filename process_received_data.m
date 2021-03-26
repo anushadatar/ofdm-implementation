@@ -9,8 +9,13 @@ function output_data = process_received_data(x_train, tx_cyclic, y_time, block_s
     
     % Get rid of cyclic prefix and put back in frequency domain.
     y_fft = decode_data(y_time_lag_corr(1.25*(length(x_train)+1):end), number_of_blocks, block_size, prefix_size);
+    y_fft_train = decode_data(y_time_lag_corr(1:1.25*(length(x_train))), 30, block_size, prefix_size);
+    
+    % Frequency offset correction
+    y_corrected = correct_frequency_offset(y_fft_train, y_fft, number_of_blocks);
+    size(y_corrected)
     
     % Divide out the channel H_k
     channel_matrix = repmat(H_k, 1, number_of_blocks);
-    output_data = y_fft./channel_matrix;
+    output_data = y_corrected./channel_matrix;
 end

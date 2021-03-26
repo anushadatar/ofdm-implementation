@@ -24,10 +24,10 @@ function [ y ] = nonflat_channel_timing_error( x )
     y = conv(x,h);
 
     % generate frequency offset
-    f_delta = pi*rand(1)/64
+    f_delta = 0.032 %pi*rand(1)/64
 
     % apply frequency offset
-    y = y.*exp(1i*f_delta*[1:length(y)]');
+    y = y.*exp(1i*f_delta*[1:length(y)]);
 
     % compute appropriate noise variance to achive SNR
     noise_var = var(y)/SNR;
