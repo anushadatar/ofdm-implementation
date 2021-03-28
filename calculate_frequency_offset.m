@@ -2,16 +2,16 @@ function f_delta_hat = calculate_frequency_offset(y)
     % TODO
     
     % Offset to skip the first 64-sample block
-    offset = 80+17;
+    offset = 64;
     
     % Vector for exponentials
     exponentials = zeros(1, 64);
     
     for i = offset:offset+63
-        exponentials(i-offset+1) = angle(y(i+offset-17) ./ y(i));
+        exponentials(i-offset+1) = angle(y(i+offset+1) ./ y(i+1));
     end
     
-    f_delta_hat = abs(mean(exponentials)./80)
+    f_delta_hat = abs(mean(exponentials)./64)
     
     % Take angle of all exponents and divide by 64
     %f_delta_hat = 0.032 %(1/64).*sum(exponentials)

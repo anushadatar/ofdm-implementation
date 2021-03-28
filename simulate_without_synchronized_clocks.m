@@ -19,6 +19,10 @@ function [output_data, error_rate] = simulate_without_synchronized_clocks(x_trai
     % Package transmit data
     tx_cyclic = package_data(x_train, x_data, block_size, prefix_size);
     
+    preamb_block = sign(randn(1,block_size)) + sign(randn(1,block_size))*1i;
+    preamb = repmat(preamb_block, 1, 3);
+    tx_cyclic = [preamb tx_cyclic];
+    
     % transmit the signal
     y_time = nonflat_channel_timing_error(tx_cyclic);
     output_data =  process_received_data(x_train, tx_cyclic, y_time, block_size, prefix_size, number_of_blocks, num_train);
