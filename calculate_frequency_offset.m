@@ -11,7 +11,7 @@ function f_delta_hat = calculate_frequency_offset(y)
         exponentials(i-offset+1) = angle(y(i+offset-17) ./ y(i));
     end
     
-    f_delta_hat = mean(exponentials)./80;
+    f_delta_hat = abs(mean(exponentials)./80)
     
     % Take angle of all exponents and divide by 64
     %f_delta_hat = 0.032 %(1/64).*sum(exponentials)
