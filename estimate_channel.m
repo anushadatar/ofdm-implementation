@@ -1,4 +1,4 @@
-function H_K = estimate_channel(x_train, y_time, block_size, prefix_size, num_train)
+function H_K = estimate_channel(x_train, y_time, block_size, prefix_size, num_train, f_delta_hat)
     % Estimate the impulse response of the channel using the training
     % signal known by both the transmitter and the receiver.
     % Input Parameters:
@@ -14,7 +14,7 @@ function H_K = estimate_channel(x_train, y_time, block_size, prefix_size, num_tr
 
     % Get rid of cyclic prefix
     % todo BLOCK SIZE PREFIX SIZE
-    y_time_no_cyclic = decode_data(y_time, num_train, block_size, prefix_size);
+    y_time_no_cyclic = decode_and_correct_frequency_offset(y_time, num_train, block_size, prefix_size, f_delta_hat, 0);
 
     % Put back in frequency domain and add to channel estimate.git status
     H_K_long = y_time_no_cyclic./x_train;
