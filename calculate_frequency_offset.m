@@ -1,23 +1,19 @@
-function f_delta_hat = calculate_frequency_offset(y)
-    % TODO
-    
-    % Offset to skip the first 64-sample block
-    offset = 64;
+function f_delta_hat = calculate_frequency_offset(y, block_size)
+    % Calculate the frequency offset from the raw received signal (assuming
+    % it contains a preamble 
+    % Input Parameters:
+    % y          : Raw received data to process.
+    % block_size : The number of bits per block, used to skip the first
+    %              block by offsetting indices. 
+    % Returns:
+    % f_delta_hat : Complex frequency correction factor.
     
     % Vector for exponentials
-    exponentials = zeros(1, 64);
+    exponentials = zeros(1, block_size);
     
-    for i = offset:offset+63
-        exponentials(i-offset+1) = angle(y(i+offset+1) ./ y(i+1));
+    for i = block_size:2*block_size - 1
+        exponentials(i-block_size+1) = angle(y(i+block_size+1) ./ y(i+1));
     end
     
-    f_delta_hat = abs(mean(exponentials)./64)
-    
-    % Take angle of all exponents and divide by 64
-    %f_delta_hat = 0.032 %(1/64).*sum(exponentials)
-    
-    % Return corrected signal
-    % exp_vector = exp(-1i*f_delta_hat*[1:length(y_fft)]);
-    % y_corrected = y_fft.*exp_vector;
-    
+    f_delta_hat = abs(mean(exponentials)./block_size)    
 end

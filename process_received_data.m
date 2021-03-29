@@ -18,8 +18,8 @@ function output_data = process_received_data(x_train, tx_cyclic, y_time, block_s
     lag_offset = 5; % Number of additional signal to provide to correct_lag
     y_time_lag_corr = correct_lag(tx_cyclic(1:(block_size - 1)*num_preamb_blocks*lag_offset), y_time);
     
-    % Calculate Frequenct Offset
-    f_delta_hat = calculate_frequency_offset(y_time_lag_corr(1:(block_size*num_preamb_blocks)));
+    % Calculate frequency Offset
+    f_delta_hat = calculate_frequency_offset(y_time_lag_corr(1:(block_size*num_preamb_blocks)), block_size);
     
     % Correct frequency offset
     exp_vector = exp(-1i*f_delta_hat*[1:length(y_time_lag_corr)]);
