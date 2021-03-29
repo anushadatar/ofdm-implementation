@@ -10,11 +10,9 @@ function [y_time] = correct_lag(x_cyclic, y_time)
     
     % Determine how much y1 is lagging
     [c1, lags1] = xcorr(abs(y_time), abs(x_cyclic));
-    %stem(lags1,c1)
     [~, I1] = max(abs(c1));
-    t_corr1 = lags1(I1)
-    % Correct lag in y1 and add zeros to the end to account for shortened
-    % length
+    t_corr1 = lags1(I1);
+    
+    % Correct lag in y1 by that one
     y_time = y_time(t_corr1+1:end);
-    %y_time = y_time(8:end);
 end
