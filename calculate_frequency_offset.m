@@ -1,6 +1,6 @@
 function f_delta_hat = calculate_frequency_offset(y, block_size)
     % Calculate the frequency offset from the raw received signal (assuming
-    % it contains a preamble 
+    % it contains a preamble followed by training data).
     % Input Parameters:
     % y          : Raw received data to process.
     % block_size : The number of bits per block, used to skip the first
