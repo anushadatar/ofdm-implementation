@@ -23,7 +23,7 @@ function [output_data, error_rate] = simulate_without_synchronized_clocks(x_trai
     
     % Transmit the signal across the channel and process received data.
     y_time = nonflat_channel_timing_error(tx_cyclic);
-    output_data =  process_received_data(x_train, tx_cyclic, y_time, block_size, prefix_size, number_of_blocks, num_train);
+    output_data =  process_received_data(x_train, tx_cyclic, y_time, block_size, prefix_size, number_of_blocks, num_train, num_preamb_blocks);
     
     % Compute overall error
     error_rate = compute_error(output_data, x_data);
