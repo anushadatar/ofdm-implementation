@@ -14,9 +14,10 @@ function tx_cyclic = package_data(x_train, x_data, block_size, prefix_size, num_
 
     % Construct tx signal by appending the training signal to the beginning
     % of the data signal
-    tx = [x_train x_data];
-    % Add cyclic prefixes and take the ifft
-    tx_cyclic = encode_data(tx, block_size, prefix_size);
+    x_train_cyclic = encode_data(x_train, block_size, prefix_size);
+    x_data_cyclic = encode_info_bits(x_data, block_size, prefix_size);
+    
+    tx_cyclic = [x_train_cyclic x_data_cyclic];
     
     % Create preamble and add it to the prepared signal
     preamb_block = sign(randn(1,block_size)) + sign(randn(1,block_size))*1i;
