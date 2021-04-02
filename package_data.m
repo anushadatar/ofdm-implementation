@@ -23,5 +23,5 @@ function tx_cyclic = package_data(x_train, x_data, block_size, prefix_size, num_
     preamb_block = sign(randn(1,block_size)) + sign(randn(1,block_size))*1i;
     preamb = repmat(preamb_block, 1, num_preamb_blocks);
     tx_cyclic = [preamb tx_cyclic];
-
+    write_hardware_tx_file(tx_cyclic);
 end

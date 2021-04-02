@@ -24,7 +24,7 @@ function [ y ] = nonflat_channel_timing_error( x )
     y = conv(x,h);
 
     % generate frequency offset
-    f_delta = pi*rand(1)/64;
+    f_delta = pi*rand(1)/64
 
     % apply frequency offset
     y = y.*exp(1i*f_delta*[1:length(y)]);
