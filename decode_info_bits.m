@@ -1,5 +1,13 @@
 function x_decoded = decode_info_bits(y_time, block_size, prefix_size)
-    % TODO
+    % Decode data on receipt by removing the cyclic prefix,
+    % using pilots to compute and account for phase offset, and taking the
+    % shifted fft of the block.
+    % Input Parameters:
+    % y_time      : The data to decode.
+    % block_size  : The number of bits per block (64 for wifi).
+    % prefix_size : The number of bits in the prefix (16 for wifi)
+    % Returns:
+    % x_decoded    : The decoded data vector.
     x_decoded = [];
     num_pilots = 4;
     prefixed_block_size = block_size + prefix_size;

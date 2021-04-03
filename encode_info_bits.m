@@ -1,11 +1,13 @@
 function x_cyclic = encode_info_bits(x_data, block_size, prefix_size)
-    % Encode data for transmission by appending the cyclic prefix.
+    % Encode data for transmission by appending the cyclic prefix,
+    % adding pilots, and taking the shifted ifft of the block.
     % Input Parameters:
     % x_data      : The data to encode.
     % block_size  : The number of bits per block (64 for wifi).
     % prefix_size : The number of bits in the prefix (16 for wifi)
     % Returns:
-    % x_cyclic    : The data vector encoded with the cyclic prefix.
+    % x_cyclic    : The data vector encoded with the cyclic prefix and
+    %               pilot signals.
     x_cyclic = [];
     for i = 1:(block_size - prefix_size):length(x_data) - (block_size - prefix_size - 1)
         block = zeros(1, block_size);
