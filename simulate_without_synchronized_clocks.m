@@ -1,4 +1,4 @@
-function [output_data, error_rate] = simulate_without_synchronized_clocks(x_train, x_data)
+function [output_data, error_rate] = simulate_without_synchronized_clocks(x_train, x_data, preamb_block)
     % Simulate sending and receiving data using OFDM across a channel that
     % introduces a frequency offset. 
     % x_train     : The training signal to transmit across the channel.
@@ -19,7 +19,7 @@ function [output_data, error_rate] = simulate_without_synchronized_clocks(x_trai
     x_train = repmat(x_train, 1, num_train);
     
     % Package transmit data
-    tx_cyclic = package_data(x_train, x_data, block_size, prefix_size, num_preamb_blocks);
+    tx_cyclic = package_data(x_train, x_data, block_size, prefix_size, num_preamb_blocks, preamb_block);
     
     % Transmit the signal across the channel and process received data.
     y_time = nonflat_channel_timing_error(tx_cyclic);

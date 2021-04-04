@@ -1,4 +1,4 @@
-function tx_cyclic = package_data(x_train, x_data, block_size, prefix_size, num_preamb_blocks)
+function tx_cyclic = package_data(x_train, x_data, block_size, prefix_size, num_preamb_blocks, preamb_block)
     % Package the existing transmit data to include the encoded training
     % data, encoded data to send, and a preamble.
     % Input Parameters:
@@ -20,7 +20,6 @@ function tx_cyclic = package_data(x_train, x_data, block_size, prefix_size, num_
     tx_cyclic = [x_train_cyclic x_data_cyclic];
     
     % Create preamble and add it to the prepared signal
-    preamb_block = sign(randn(1,block_size)) + sign(randn(1,block_size))*1i;
     preamb = repmat(preamb_block, 1, num_preamb_blocks);
     tx_cyclic = [preamb tx_cyclic];
     write_hardware_tx_file(tx_cyclic);
