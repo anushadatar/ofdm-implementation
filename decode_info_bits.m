@@ -1,4 +1,4 @@
-function x_decoded = decode_info_bits(y_time, block_size, prefix_size, number_of_blocks)
+function x_decoded = decode_info_bits(y_time, block_size, prefix_size, number_of_blocks, H_k)
     % Decode data on receipt by removing the cyclic prefix,
     % using pilots to compute and account for phase offset, and taking the
     % shifted fft of the block.
@@ -24,15 +24,19 @@ function x_decoded = decode_info_bits(y_time, block_size, prefix_size, number_of
             elseif (m >= 60)
                 continue;
             elseif (m == 7)
-                phase_offset = phase_offset + angle(next_block_shifted(m));
+                phase_offset = phase_offset + angle(next_block_shifted(m)./H_k(m));
+                %angle(next_block_shifted(m)./H_k(m))
             elseif (m == 26)
-                phase_offset = phase_offset + angle(next_block_shifted(m));
+                phase_offset = phase_offset + angle(next_block_shifted(m)./H_k(m));
+                %angle(next_block_shifted(m)./H_k(m))
             elseif (m == 40)
-                phase_offset = phase_offset + angle(next_block_shifted(m));
+                phase_offset = phase_offset + angle(next_block_shifted(m)./H_k(m));
+                %angle(next_block_shifted(m)./H_k(m))
             elseif (m == 59)
-                phase_offset = phase_offset + angle(next_block_shifted(m));
+                phase_offset = phase_offset + angle(next_block_shifted(m)./H_k(m));
+                %angle(next_block_shifted(m)./H_k(m))
             else
-                x_decoded_uncorrected = [x_decoded_uncorrected next_block_shifted(m)];
+                x_decoded_uncorrected = [x_decoded_uncorrected (next_block_shifted(m)./H_k(m))];
             end
         end
         phase_offset = phase_offset / num_pilots;

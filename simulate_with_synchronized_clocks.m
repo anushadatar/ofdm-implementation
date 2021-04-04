@@ -11,7 +11,7 @@ function [output_data, error_rate] = simulate_with_synchronized_clocks(x_train, 
     number_of_blocks = 100;  % Number of blocks in data sequence
     block_size = 64;         % Bits per block (not including prefix)
     prefix_size = 16;        % Prefix length in bits
-    num_train = 30;          % Number of training blocks
+    num_train = 100;          % Number of training blocks
     
     % Send multiple training sequences
     x_train = repmat(x_train, 1, num_train);
