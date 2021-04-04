@@ -1,4 +1,4 @@
-function x_decoded = decode_info_bits(y_time, block_size, prefix_size)
+function x_decoded = decode_info_bits(y_time, block_size, prefix_size, number_of_blocks)
     % Decode data on receipt by removing the cyclic prefix,
     % using pilots to compute and account for phase offset, and taking the
     % shifted fft of the block.
@@ -11,9 +11,9 @@ function x_decoded = decode_info_bits(y_time, block_size, prefix_size)
     x_decoded = [];
     num_pilots = 4;
     prefixed_block_size = block_size + prefix_size;
-    for i = 1:prefixed_block_size:length(y_time) - (prefixed_block_size - 1)
+    for i = 1:prefixed_block_size:(prefixed_block_size*number_of_blocks) - (prefixed_block_size - 1)
         next_block = fft(y_time(i+prefix_size:i+prefixed_block_size - 1));
-        next_block_shifted = fftshift(next_block);
+        next_block_shifted = ifftshift(next_block);
         x_decoded_uncorrected = [];
         phase_offset = 0;
         for m = 1:block_size
