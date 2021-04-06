@@ -18,6 +18,7 @@ function H_K = estimate_channel(x_train, y_time, block_size, prefix_size, num_tr
 
     % Find average channel estimate
     H_K = mean(H_K_r,1);
+    
     % Skip pilots to facilitate use with hardware.
     H_K = fftshift(H_K);
     %H_K_small = [H_K(8:25) H_K(27:32) H_K(34:39) H_K(41:58)];

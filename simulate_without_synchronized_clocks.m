@@ -12,7 +12,7 @@ function [output_data, error_rate] = simulate_without_synchronized_clocks(x_trai
     number_of_blocks = 100;  % Number of blocks in data sequence
     block_size = 64;         % Bits per block (not including prefix)
     prefix_size = 16;        % Prefix length in bits
-    num_train = 30;          % Number of training blocks
+    num_train = 10;          % Number of training blocks
     num_preamb_blocks = 3;   % Number of preamble blocks prior to training
 
     % Send multiple training sequences

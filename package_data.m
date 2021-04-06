@@ -22,5 +22,5 @@ function tx_cyclic = package_data(x_train, x_data, block_size, prefix_size, num_
     % Create preamble and add it to the prepared signal
     preamb = repmat(preamb_block, 1, num_preamb_blocks);
     tx_cyclic = [preamb tx_cyclic];
-    %write_hardware_tx_file(tx_cyclic);
+    write_hardware_tx_file(tx_cyclic);
 end
