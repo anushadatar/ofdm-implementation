@@ -4,7 +4,7 @@ function y_decoded = decode_data(y_time, number_of_blocks, block_size, prefix_si
     % y_time           : The data to decode.
     % number_of_blocks : Number of blocks in the data.
     % block_size       : The number of bits per block (64 for wifi).
-    % prefix_size      : The number of bits in the prefix (16 for wifi)
+    % prefix_size      : The number of bits in the prefix (16 for wifi).
     % Returns:
     % y_decoded        : The data vector with removed cyclic prefixes.
     

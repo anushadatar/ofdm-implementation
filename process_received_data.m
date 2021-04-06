@@ -28,12 +28,10 @@ function output_data = process_received_data(x_train, tx_cyclic, y_time, block_s
     % Cut off preamble
     y_time_lag_corr = y_time_lag_corr(block_size*num_preamb_blocks+1:end);
     
-    % Estimate Channel
+    % Estimate channel
     H_k = estimate_channel(x_train, y_time_lag_corr, block_size, prefix_size, num_train);
     
-    % Get rid of cyclic prefix and put back in frequency domain.
+    % Get rid of cyclic prefix and put back in frequency domain and divide
+    % out the channel
     output_data = decode_info_bits(y_time_lag_corr(((block_size + prefix_size)/block_size)*(length(x_train)+1):end), block_size, prefix_size, number_of_blocks, H_k);
-    % Divide out the channel H_k
-    %channel_matrix = repmat(H_k, 1, number_of_blocks);
-    %output_data = y_fft./channel_matrix;
 end
