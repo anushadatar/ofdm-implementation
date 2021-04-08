@@ -30,8 +30,10 @@ function [err, output_data] = process_received_data_hardware(rx_path, tx_path, x
     cyclic_block_size = block_size + prefix_size;
     tx_cyclic = tx_cyclic(buffer_width:(buffer_width+block_size*num_preamb_blocks+block_size*num_train+cyclic_block_size*number_of_blocks-1));
     
-    % Process received signal to get output data
+    % Repeat x_train vector to make dividing easier
     x_train = repmat(x_train, 1, num_train);
+    
+    % Process received signal to get output data
     output_data = process_received_data(x_train, tx_cyclic, rx, block_size, prefix_size, number_of_blocks, num_train, num_preamb_blocks);
    
     % Calculate BER
